@@ -74,6 +74,8 @@ dependencies {
     implementation deps.glide.glide
     kapt deps.glide.complier
 
+    implementation deps.firebase.firestore
+
     testImplementation deps.support.junit
     androidTestImplementation deps.support.runner
     androidTestImplementation deps.support.espresso_core
