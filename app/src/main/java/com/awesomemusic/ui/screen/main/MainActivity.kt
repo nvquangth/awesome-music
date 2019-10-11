@@ -1,7 +1,8 @@
-package com.awesomemusic
+package com.awesomemusic.ui.screen.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.awesomemusic.R
 
 class MainActivity : AppCompatActivity() {
 

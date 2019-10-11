@@ -46,6 +46,7 @@ dependencies {
     implementation deps.support.recyclerview
     implementation deps.support.material
     implementation deps.support.vectordrawable
+    implementation deps.support.swiperefreshlayout
 
     implementation deps.lifecycle.lifecycle
     implementation deps.lifecycle.java8
@@ -57,6 +58,9 @@ dependencies {
     implementation deps.room.room
     implementation deps.room.rxjava
     kapt deps.room.complier
+
+    implementation deps.navigation.fragment
+    implementation deps.navigation.ui
 
     implementation deps.rx.rxjava
     implementation deps.rx.rxandroid
@@ -74,3 +78,5 @@ dependencies {
     androidTestImplementation deps.support.runner
     androidTestImplementation deps.support.espresso_core
 }
+
+apply plugin: "androidx.navigation.safeargs.kotlin"
