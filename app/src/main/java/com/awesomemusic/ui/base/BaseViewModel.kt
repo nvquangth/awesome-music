@@ -35,6 +35,5 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     open fun onError(throwable: Throwable) {
-
     }
 }

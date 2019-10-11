@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.awesomemusic.data.model.Video" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_4">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_video"
+            android:layout_width="@dimen/dp_160"
+            android:layout_height="0dp"
+            app:glideUrl="@{item.thumbnailUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_sample" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_video_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@{item.title}"
+            android:textColor="@color/color_black"
+            app:layout_constraintEnd_toStartOf="@+id/btn_more_video"
+            app:layout_constraintStart_toEndOf="@+id/img_video"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MV ĐỪNG NHƯ THÓI QUEN | JAYKII &amp; SARA | QUAY Ở THÁI LAN (DEMO)" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_more_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="@dimen/dp_4"
+            android:src="@drawable/ic_more_vert_black_18dp"
+            android:tint="@color/color_gray_600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_channel_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_4"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.channelTitle}"
+            android:textColor="@color/color_blue_gray_800"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintEnd_toStartOf="@+id/btn_more_video"
+            app:layout_constraintStart_toEndOf="@+id/img_video"
+            app:layout_constraintTop_toBottomOf="@+id/txt_video_title"
+            tools:text="CJ BLUE Entertainment" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_publish_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/color_blue_gray_800"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintStart_toEndOf="@+id/img_video"
+            app:layout_constraintTop_toBottomOf="@+id/txt_channel_title"
+            tools:text="1 year ago" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:textColor="@color/color_blue_gray_800"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintStart_toEndOf="@+id/txt_publish_at"
+            app:layout_constraintTop_toBottomOf="@+id/txt_channel_title"
+            tools:text="121M views" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

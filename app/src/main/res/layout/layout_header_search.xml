@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/text_search"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view" />
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_back"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_50"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@+id/text_search"
         app:layout_constraintTop_toTopOf="@+id/text_search" />
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/button_search_voice"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_50"
