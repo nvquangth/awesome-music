@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "27339432960",
+    "firebase_url": "https://awesome-7afa3.firebaseio.com",
+    "project_id": "awesome-7afa3",
+    "storage_bucket": "awesome-7afa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27339432960:android:16bbe246a42c68892aa4e5",
+        "android_client_info": {
+          "package_name": "com.awesomemusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27339432960-qapbs44qpcejqfk78puoci8c1721g852.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjj4G5oeBxd4eGcsltOxbWIqqnRzoCMvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27339432960-qapbs44qpcejqfk78puoci8c1721g852.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
