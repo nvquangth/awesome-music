@@ -34,6 +34,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding, PlaylistViewModel
 
         viewModel.apply {
             getPlaylist()
+            listeningPlaylist()
         }
     }
 

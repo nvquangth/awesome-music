@@ -21,6 +21,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
         super.onCreate(savedInstanceState)
 
         setUpBottomNavigation()
+
+        addFragment(
+            fragment = PlaylistFragment.newInstance(),
+            TAG = PlaylistFragment.TAG
+        )
     }
 
     override fun onNavigationItemReselected(item: MenuItem) = when (item.itemId) {
@@ -28,10 +33,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
 
         }
         R.id.nav_playlist -> {
-            addFragment(
-                fragment = PlaylistFragment.newInstance(),
-                TAG = PlaylistFragment.TAG
-            )
+
         }
         R.id.nav_trending -> {
 

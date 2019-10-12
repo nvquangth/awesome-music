@@ -31,4 +31,31 @@ class PlaylistViewModel(private val cloudRepository: CloudRepository) : BaseView
             onError(exception)
         }
     }
+
+    fun listeningPlaylist() {
+        cloudRepository.getPlaylist().addSnapshotListener { snapshot, err ->
+            if (err != null) {
+
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null) {
+                val videos = arrayListOf<Video>()
+                for (document in snapshot.documents) {
+                    val video = Video(
+                        id = document.getString(Constants.ID_FIELD),
+                        videoId = document.getString(Constants.VIDEO_ID_FIELD) ?: "",
+                        channelId = document.getString(Constants.CHANNEL_ID_FIELD),
+                        channelTitle = document.getString(Constants.CHANNEL_TITLE_FIELD),
+                        description = document.getString(Constants.DESCRIPTION_FIELD),
+                        publishedAt = document.getString(Constants.PUBLISHED_AT_FIELD),
+                        thumbnailUrl = document.getString(Constants.THUMBNAIL_URL_FIELD),
+                        title = document.getString(Constants.TITLE_FIELD)
+                    )
+                    videos.add(video)
+                }
+                playlist.value = videos
+            }
+        }
+    }
 }
