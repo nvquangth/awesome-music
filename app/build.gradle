@@ -82,6 +82,8 @@ dependencies {
     testImplementation deps.support.junit
     androidTestImplementation deps.support.runner
     androidTestImplementation deps.support.espresso_core
+
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }
 
 apply plugin: "androidx.navigation.safeargs.kotlin"

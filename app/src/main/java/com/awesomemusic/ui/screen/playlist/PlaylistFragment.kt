@@ -6,6 +6,7 @@ import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.databinding.FragmentPlaylistBinding
 import com.awesomemusic.ui.base.BaseFragment
+import com.awesomemusic.ui.screen.player.PlayerFragment
 import kotlinx.android.synthetic.main.fragment_playlist.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,6 +40,9 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding, PlaylistViewModel
     }
 
     private fun onItemVideoClick(video: Video) {
-
+        addFragment(
+            fragment = PlayerFragment.newInstance(video),
+            TAG = PlayerFragment.TAG
+        )
     }
 }
