@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/motionLayoutPlayer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/player_scene"
+    app:showPaths="true">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.awesomemusic.ui.screen.player.PlayerViewModel" />
-    </data>
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/youTubePlayer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.youtube.player.YouTubePlayerView
-            android:id="@+id/youTubePlayer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/layoutSubInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExpanded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expanded"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCollapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collapsed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

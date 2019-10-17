@@ -1,27 +1,42 @@
 package com.awesomemusic.ui.screen.player
 
+import android.app.Fragment
+import android.os.Build
 import android.os.Bundle
-import androidx.core.os.bundleOf
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.awesomemusic.R
-import com.awesomemusic.data.model.Video
-import com.awesomemusic.databinding.FragmentPlayerBinding
-import com.awesomemusic.ui.base.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.android.synthetic.main.fragment_player.*
 
-class PlayerFragment : BaseFragment<FragmentPlayerBinding, PlayerViewModel>() {
+class PlayerFragment: Fragment() {
     companion object {
-        const val TAG = "PlayerFragment"
-        private const val BUNDLE_VIDEO = "BUNDLE_VIDEO"
-        fun newInstance(video: Video) = PlayerFragment().apply {
-            bundleOf(BUNDLE_VIDEO to video)
-        }
+        const val TAG = "PLAYER_FRAGMENT"
+
+        fun newInstance() = PlayerFragment()
     }
 
-    override val viewModel: PlayerViewModel by viewModel()
-    override val layoutId: Int = R.layout.fragment_player
+    override fun onCreateView(
+        inflater: LayoutInflater?,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater?.inflate(R.layout.fragment_player, container, false)
 
+        return view
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-    }
 
+        btnExpanded.setOnClickListener {
+            motionLayoutPlayer.transitionToEnd()
+        }
+        btnCollapsed.setOnClickListener {
+            motionLayoutPlayer.transitionToStart()
+        }
+    }
 }
