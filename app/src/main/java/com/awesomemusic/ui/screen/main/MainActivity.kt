@@ -3,21 +3,20 @@ package com.awesomemusic.ui.screen.main
 import android.app.Fragment
 import android.app.FragmentTransaction
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.MenuItem
 import com.awesomemusic.R
+import com.awesomemusic.data.model.Video
+import com.awesomemusic.ui.base.ItemVideoClickListenter
 import com.awesomemusic.ui.screen.player.PlayerFragment
+import com.awesomemusic.ui.screen.playlist.PlaylistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.youtube.player.YouTubeBaseActivity
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_player.*
 
 class MainActivity : YouTubeBaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
-    BottomNavigationView.OnNavigationItemReselectedListener {
+    BottomNavigationView.OnNavigationItemReselectedListener,
+    ItemVideoClickListenter {
 
 //    override val viewModel: MainViewModel by viewModel()
 //    override val layoutId: Int = R.layout.activity_main
@@ -33,29 +32,31 @@ class MainActivity : YouTubeBaseActivity(),
 //            TAG = PlayerFragment.TAG
 //        )
 
-        fragmentManager?.beginTransaction()?.add(R.id.container, PlayerFragment.newInstance(), PlayerFragment.TAG)?.commit()
-
-
-        Handler().postDelayed({
-            val listFragment = fragmentManager?.findFragmentByTag(PlayerFragment.TAG)
-            listFragment?.youTubePlayer?.initialize("AIzaSyDmVBc4vIy8hBBFnv3tB3VvhZwUewNqYjs", object : YouTubePlayer.OnInitializedListener {
-                override fun onInitializationFailure(
-                    p0: YouTubePlayer.Provider?,
-                    p1: YouTubeInitializationResult?
-                ) {
-                    Log.d("youtube_player", "failed")
-                }
-
-                override fun onInitializationSuccess(
-                    p0: YouTubePlayer.Provider?,
-                    p1: YouTubePlayer?,
-                    p2: Boolean
-                ) {
-                    p1?.cueVideo("90Y_gWG4sZY")
-                }
-            })
-
-        }, 1000)
+        fragmentManager?.beginTransaction()
+            ?.add(R.id.container, PlaylistFragment.newInstance(), PlaylistFragment.TAG)?.commit()
+//        fragmentManager?.beginTransaction()?.add(R.id.container, PlayerFragment.newInstance(), PlayerFragment.TAG)?.commit()
+//
+//
+//        Handler().postDelayed({
+//            val listFragment = fragmentManager?.findFragmentByTag(PlayerFragment.TAG)
+//            listFragment?.youTubePlayer?.initialize("AIzaSyDmVBc4vIy8hBBFnv3tB3VvhZwUewNqYjs", object : YouTubePlayer.OnInitializedListener {
+//                override fun onInitializationFailure(
+//                    p0: YouTubePlayer.Provider?,
+//                    p1: YouTubeInitializationResult?
+//                ) {
+//                    Log.d("youtube_player", "failed")
+//                }
+//
+//                override fun onInitializationSuccess(
+//                    p0: YouTubePlayer.Provider?,
+//                    p1: YouTubePlayer?,
+//                    p2: Boolean
+//                ) {
+//                    p1?.cueVideo("90Y_gWG4sZY")
+//                }
+//            })
+//
+//        }, 1000)
     }
 
     override fun onNavigationItemReselected(item: MenuItem) = when (item.itemId) {
@@ -99,6 +100,19 @@ class MainActivity : YouTubeBaseActivity(),
         }
     }
 
+    override fun onItemClick(video: Video) {
+        val currentFragment = findFragment(PlayerFragment.TAG)
+        val newFragment = PlayerFragment.newInstance(video)
+
+        if (currentFragment == null) {
+                addFragment(fragment = newFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
+        } else {
+            if (currentFragment is PlayerFragment) {
+                currentFragment.loadNewVideo(video)
+            }
+        }
+    }
+
     private fun setUpBottomNavigation() {
         bottomNavigation.apply {
             selectedItemId = R.id.nav_playlist
@@ -109,20 +123,18 @@ class MainActivity : YouTubeBaseActivity(),
     }
 
     fun addFragment(
-        fragment: Fragment, TAG: String?, addToBackStack: Boolean = false,
-        transit: Int = -1
+        fragment: Fragment, TAG: String?, addToBackStack: Boolean = false
     ) {
         fragmentManager.beginTransaction().add(R.id.container, fragment, TAG).apply {
-            commitTransaction(this, addToBackStack, transit)
+            commitTransaction(this, addToBackStack)
         }
     }
 
     fun replaceFragment(
-        fragment: Fragment, TAG: String?, addToBackStack: Boolean = false,
-        transit: Int = -1
+        fragment: Fragment, TAG: String?, addToBackStack: Boolean = false
     ) {
         fragmentManager.beginTransaction().replace(R.id.container, fragment, TAG).apply {
-            commitTransaction(this, addToBackStack, transit)
+            commitTransaction(this, addToBackStack)
         }
     }
 
@@ -131,11 +143,9 @@ class MainActivity : YouTubeBaseActivity(),
     }
 
     private fun commitTransaction(
-        transaction: FragmentTransaction, addToBackStack: Boolean = false,
-        transit: Int = -1
+        transaction: FragmentTransaction, addToBackStack: Boolean = false
     ) {
         if (addToBackStack) transaction.addToBackStack(null)
-        if (transit != -1) transaction.setTransition(transit)
         transaction.commit()
     }
 }
