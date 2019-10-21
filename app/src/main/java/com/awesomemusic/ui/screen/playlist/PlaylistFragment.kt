@@ -1,8 +1,10 @@
 package com.awesomemusic.ui.screen.playlist
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentTransaction
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,9 @@ import android.view.ViewGroup
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.remote.FirestoreHelperImpl
+import com.awesomemusic.data.remote.Network
 import com.awesomemusic.data.repository.CloudRepository
+import com.awesomemusic.data.repository.VideoRepository
 import com.awesomemusic.ui.base.ItemVideoClickListenter
 import com.awesomemusic.ui.screen.player.PlayerFragment
 import kotlinx.android.synthetic.main.fragment_playlist.*
@@ -43,15 +47,17 @@ class PlaylistFragment : Fragment(), PlaylistContract.View {
         return view
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         presenter = PlaylistPresenter(
             view = this,
-            cloudRepository = CloudRepository(firestoreHelper = FirestoreHelperImpl())
+            cloudRepository = CloudRepository(firestoreHelper = FirestoreHelperImpl()),
+            videoRepository = VideoRepository(api = Network().createMovieApi())
         )
 
-        adapter = VideoAdapter(::onItemVideoClick)
+        adapter = VideoAdapter(context, ::onRemoveItemVideoClick, ::onItemVideoClick)
 
         recyclerPlaylist.adapter = adapter
 
@@ -77,6 +83,10 @@ class PlaylistFragment : Fragment(), PlaylistContract.View {
 
     private fun onItemVideoClick(video: Video) {
         itemClickListener.onItemClick(TAG, video)
+    }
+
+    private fun onRemoveItemVideoClick(video: Video) {
+        presenter.removeVideoFromPlaylist(video)
     }
 
     private fun addFragment(

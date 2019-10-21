@@ -23,7 +23,7 @@ interface VideoApi {
     ): Single<BaseResponse>
 
     @FormUrlEncoded
-    @DELETE
+    @HTTP(method = "DELETE", path = "/playlists", hasBody = true)
     fun deleteVideoFromPlaylist(
         @Field("videoId") videoId: String,
         @Field("title") title: String,

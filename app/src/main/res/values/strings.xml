@@ -16,4 +16,7 @@
     <!-- mail -->
     <string name="title_mail_subject">Góp ý về ứng dụng</string>
     <string name="msg_mail_error">Không tìm thấy ứng dụng gửi mail, vui lòng thử lại!</string>
+
+    <!--    -->
+    <string name="title_remove_video">Xóa</string>
 </resources>

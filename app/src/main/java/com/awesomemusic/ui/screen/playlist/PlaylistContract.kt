@@ -15,5 +15,7 @@ interface PlaylistContract {
         fun getPlaylist()
 
         fun listeningPlaylist()
+
+        fun removeVideoFromPlaylist(video: Video)
     }
 }
