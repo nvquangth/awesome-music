@@ -4,7 +4,10 @@ import com.awesomemusic.data.Constants
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.repository.CloudRepository
 
-class PlaylistPresenter(private var view: PlaylistContract.View, private val cloudRepository: CloudRepository) : PlaylistContract.Presenter {
+class PlaylistPresenter(
+    private var view: PlaylistContract.View,
+    private val cloudRepository: CloudRepository
+) : PlaylistContract.Presenter {
 
     override fun getPlaylist() {
         cloudRepository.getPlaylist().get().addOnSuccessListener { result ->

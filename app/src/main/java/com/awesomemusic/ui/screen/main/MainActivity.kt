@@ -10,10 +10,12 @@ import com.awesomemusic.ui.base.ItemVideoClickListenter
 import com.awesomemusic.ui.base.MotionLayoutListener
 import com.awesomemusic.ui.screen.player.PlayerFragment
 import com.awesomemusic.ui.screen.playlist.PlaylistFragment
+import com.awesomemusic.ui.screen.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.youtube.player.YouTubeBaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_playlist.*
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class MainActivity : YouTubeBaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
@@ -21,7 +23,9 @@ class MainActivity : YouTubeBaseActivity(),
     ItemVideoClickListenter,
     MotionLayoutListener {
 
+    private var currentFragment: Fragment? = null
     private var playlistFragment: PlaylistFragment? = null
+    private var searchFragment: SearchFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,37 +33,11 @@ class MainActivity : YouTubeBaseActivity(),
 
         setUpBottomNavigation()
 
-//        addFragment(
-//            fragment = PlayerFragment.newInstance(),
-//            TAG = PlayerFragment.TAG
-//        )
-
         playlistFragment = PlaylistFragment.newInstance()
-        fragmentManager?.beginTransaction()
-            ?.add(R.id.container, playlistFragment, PlaylistFragment.TAG)?.commit()
-//        fragmentManager?.beginTransaction()?.add(R.id.container, PlayerFragment.newInstance(), PlayerFragment.TAG)?.commit()
-//
-//
-//        Handler().postDelayed({
-//            val listFragment = fragmentManager?.findFragmentByTag(PlayerFragment.TAG)
-//            listFragment?.youTubePlayer?.initialize("AIzaSyDmVBc4vIy8hBBFnv3tB3VvhZwUewNqYjs", object : YouTubePlayer.OnInitializedListener {
-//                override fun onInitializationFailure(
-//                    p0: YouTubePlayer.Provider?,
-//                    p1: YouTubeInitializationResult?
-//                ) {
-//                    Log.d("youtube_player", "failed")
-//                }
-//
-//                override fun onInitializationSuccess(
-//                    p0: YouTubePlayer.Provider?,
-//                    p1: YouTubePlayer?,
-//                    p2: Boolean
-//                ) {
-//                    p1?.cueVideo("90Y_gWG4sZY")
-//                }
-//            })
-//
-//        }, 1000)
+        searchFragment = SearchFragment.newInstance()
+
+//        fragmentManager?.beginTransaction()?.add(R.id.container, playlistFragment, PlaylistFragment.TAG)?.commit()
+        fragmentManager?.beginTransaction()?.add(R.id.container, searchFragment, SearchFragment.TAG)?.commit()
     }
 
     override fun onNavigationItemReselected(item: MenuItem) = when (item.itemId) {
@@ -119,8 +97,11 @@ class MainActivity : YouTubeBaseActivity(),
     override fun onMotionLayoutProgress(TAG: String, process: Float) {
         when(TAG) {
             PlayerFragment.TAG -> {
-                if (playlistFragment != null) {
-                    playlistFragment?.motionLayoutPlaylist?.progress = process
+//                if (playlistFragment != null) {
+//                    playlistFragment?.motionLayoutPlaylist?.progress = process
+//                }
+                if (searchFragment != null) {
+                    searchFragment?.motionLayoutSearch?.progress = process
                 }
             }
         }

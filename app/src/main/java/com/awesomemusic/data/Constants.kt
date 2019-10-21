@@ -1,11 +1,17 @@
 package com.awesomemusic.data
 
 object Constants {
+    const val BASE_URL = "https://awesome-music.herokuapp.com"
+
     const val DEFAULT_FIRST_PAGE = 1
     const val DEFAULT_NUM_VISIBLE_THRESHOLD = 3
     const val DEFAULT_ITEM_PER_PAGE = 10
     const val THRESHOLD_CLICK_TIME = 1000
     const val MIN_PASSWORD_LENGTH = 8
+
+    const val CONNECT_TIMEOUT = 10L
+    const val READ_TIMEOUT = 10L
+    const val WRITE_TIMEOUT = 10L
 
     const val DATABASE_NAME = "DATABASE_NAME"
 
