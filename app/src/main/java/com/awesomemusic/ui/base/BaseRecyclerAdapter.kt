@@ -19,7 +19,10 @@ abstract class BaseRecyclerAdapter<Item, ViewBinding : ViewDataBinding>(
         .build()
 ) {
 
+    var data: List<Item>? = null
+
     override fun submitList(list: List<Item>?) {
+        data = list
         super.submitList(ArrayList<Item>(list ?: listOf()))
     }
 

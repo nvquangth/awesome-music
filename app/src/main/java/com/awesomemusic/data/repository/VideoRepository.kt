@@ -17,4 +17,14 @@ class VideoRepository(
         description = video.description ?: "",
         thumbnailUrl = video.thumbnailUrl ?: ""
     )
+
+    fun deleteVideoFromPlaylist(video: Video) = api.deleteVideoFromPlaylist(
+        videoId = video.videoId,
+        title = video.title ?: "",
+        channelId = video.channelId ?: "",
+        channelTitle = video.channelTitle ?: "",
+        publishedAt = video.publishedAt ?: "",
+        description = video.description ?: "",
+        thumbnailUrl = video.thumbnailUrl ?: ""
+    )
 }

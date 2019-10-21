@@ -1,6 +1,5 @@
 package com.awesomemusic.ui.screen.search
 
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
@@ -19,7 +18,6 @@ import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.remote.Network
 import com.awesomemusic.data.repository.VideoRepository
 import com.awesomemusic.ui.base.ItemVideoClickListenter
-import com.awesomemusic.ui.screen.playlist.VideoAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment: Fragment(), SearchContract.View {
@@ -29,7 +27,7 @@ class SearchFragment: Fragment(), SearchContract.View {
         fun newInstance() = SearchFragment()
     }
 
-    private lateinit var adapter: VideoAdapter
+    private lateinit var adapter: SearchVideoAdapter
     private lateinit var itemClickListener: ItemVideoClickListenter
     private var presenter: SearchPresenter? = null
 
@@ -58,7 +56,7 @@ class SearchFragment: Fragment(), SearchContract.View {
             )
         )
 
-        adapter = VideoAdapter(::onItemVideoClick)
+        adapter = SearchVideoAdapter(::onItemVideoClick)
         recycler_video?.adapter = adapter
 
         text_search?.setOnEditorActionListener { v, actionId, event ->
@@ -98,13 +96,15 @@ class SearchFragment: Fragment(), SearchContract.View {
         loading_indicator?.visibility = View.GONE
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     override fun showError(throwable: Throwable) {
-
+        Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show()
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     override fun showAddVideoToPlaylistSuccess(video: Video) {
         Toast.makeText(context, "Add success", Toast.LENGTH_SHORT).show()
+        adapter.removeVideo(video)
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -112,7 +112,7 @@ class SearchFragment: Fragment(), SearchContract.View {
         Toast.makeText(context, "Add failed", Toast.LENGTH_SHORT).show()
     }
 
-    private fun onItemVideoClick(video: Video) {
+    private fun onItemVideoClick(video: Video, position: Int) {
 //        itemClickListener.onItemClick(TAG, video)
         presenter?.addVideoToPlaylist(video)
     }
