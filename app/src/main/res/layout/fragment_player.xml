@@ -65,8 +65,8 @@
                 android:paddingStart="@dimen/dp_4"
                 android:paddingEnd="@dimen/dp_4"
                 android:paddingBottom="@dimen/dp_4"
-                android:textColor="@color/color_black"
-                android:textSize="@dimen/sp_12"
+                android:textColor="@color/color_gray_600"
+                android:textSize="@dimen/sp_11"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.motion.widget.MotionScene
 import com.awesomemusic.R
 
 class SingleViewTouchableMotionLayout(context: Context, attributeSet: AttributeSet? = null) :
@@ -16,6 +17,57 @@ class SingleViewTouchableMotionLayout(context: Context, attributeSet: AttributeS
     }
     private val viewRect = Rect()
     private var touchStarted = false
+
+    private val transitionListenerList = mutableListOf<TransitionListener?>()
+
+    init {
+        addTransitionListener(object : TransitionListener {
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
+            }
+
+            override fun allowsTransition(p0: MotionScene.Transition?): Boolean = true
+
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+            }
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+            }
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                touchStarted = false
+            }
+
+        })
+
+        super.setTransitionListener(object : TransitionListener {
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
+            }
+
+            override fun allowsTransition(p0: MotionScene.Transition?): Boolean = true
+
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+            }
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+                transitionListenerList.filterNotNull()
+                    .forEach { it.onTransitionChange(p0, p1, p2, p3) }
+            }
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                transitionListenerList.filterNotNull()
+                    .forEach { it.onTransitionCompleted(p0, p1) }
+            }
+
+        })
+    }
+
+    override fun setTransitionListener(listener: TransitionListener?) {
+        addTransitionListener(listener)
+    }
+
+    fun addTransitionListener(listener: TransitionListener?) {
+        transitionListenerList += listener
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {

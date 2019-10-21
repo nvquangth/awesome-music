@@ -7,19 +7,21 @@ import android.view.MenuItem
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.ui.base.ItemVideoClickListenter
+import com.awesomemusic.ui.base.MotionLayoutListener
 import com.awesomemusic.ui.screen.player.PlayerFragment
 import com.awesomemusic.ui.screen.playlist.PlaylistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.youtube.player.YouTubeBaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class MainActivity : YouTubeBaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
     BottomNavigationView.OnNavigationItemReselectedListener,
-    ItemVideoClickListenter {
+    ItemVideoClickListenter,
+    MotionLayoutListener {
 
-//    override val viewModel: MainViewModel by viewModel()
-//    override val layoutId: Int = R.layout.activity_main
+    private var playlistFragment: PlaylistFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +34,9 @@ class MainActivity : YouTubeBaseActivity(),
 //            TAG = PlayerFragment.TAG
 //        )
 
+        playlistFragment = PlaylistFragment.newInstance()
         fragmentManager?.beginTransaction()
-            ?.add(R.id.container, PlaylistFragment.newInstance(), PlaylistFragment.TAG)?.commit()
+            ?.add(R.id.container, playlistFragment, PlaylistFragment.TAG)?.commit()
 //        fragmentManager?.beginTransaction()?.add(R.id.container, PlayerFragment.newInstance(), PlayerFragment.TAG)?.commit()
 //
 //
@@ -109,6 +112,16 @@ class MainActivity : YouTubeBaseActivity(),
         } else {
             if (currentFragment is PlayerFragment) {
                 currentFragment.loadNewVideo(video)
+            }
+        }
+    }
+
+    override fun onMotionLayoutProgress(TAG: String, process: Float) {
+        when(TAG) {
+            PlayerFragment.TAG -> {
+                if (playlistFragment != null) {
+                    playlistFragment?.motionLayoutPlaylist?.progress = process
+                }
             }
         }
     }
