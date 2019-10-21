@@ -9,6 +9,10 @@ interface SearchContract {
         fun showVideos(videos: List<Video>)
 
         fun showQuery(q: String)
+
+        fun showAddVideoToPlaylistSuccess(video: Video)
+
+        fun showAddVideoToPlaylistFailed(video: Video)
     }
 
     interface Presenter: BasePresenter<View> {
@@ -16,5 +20,7 @@ interface SearchContract {
         fun searchVideo(q: String)
 
         fun clearQuery()
+
+        fun addVideoToPlaylist(video: Video)
     }
 }

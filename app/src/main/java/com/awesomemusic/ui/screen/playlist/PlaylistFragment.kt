@@ -76,7 +76,7 @@ class PlaylistFragment : Fragment(), PlaylistContract.View {
     }
 
     private fun onItemVideoClick(video: Video) {
-        itemClickListener.onItemClick(video)
+        itemClickListener.onItemClick(TAG, video)
     }
 
     private fun addFragment(

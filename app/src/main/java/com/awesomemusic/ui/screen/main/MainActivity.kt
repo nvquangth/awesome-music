@@ -2,8 +2,10 @@ package com.awesomemusic.ui.screen.main
 
 import android.app.Fragment
 import android.app.FragmentTransaction
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.ui.base.ItemVideoClickListenter
@@ -67,14 +69,17 @@ class MainActivity : YouTubeBaseActivity(),
         }
         R.id.nav_playlist -> {
             onTabClick(1)
+            hideKeyBoard()
             true
         }
         R.id.nav_trending -> {
             onTabClick(2)
+            hideKeyBoard()
             true
         }
         R.id.nav_library -> {
             onTabClick(3)
+            hideKeyBoard()
             true
         }
         else -> {
@@ -82,15 +87,22 @@ class MainActivity : YouTubeBaseActivity(),
         }
     }
 
-    override fun onItemClick(video: Video) {
-        val currentFragment = findFragment(PlayerFragment.TAG)
-        val newFragment = PlayerFragment.newInstance(video)
+    override fun onItemClick(fromFragment: String, video: Video) {
+        when(fromFragment) {
+            SearchFragment.TAG -> {
 
-        if (currentFragment == null) {
-            addFragment(fragment = newFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
-        } else {
-            if (currentFragment is PlayerFragment) {
-                currentFragment.loadNewVideo(video)
+            }
+            PlaylistFragment.TAG -> {
+                val currentFragment = findFragment(PlayerFragment.TAG)
+                val newFragment = PlayerFragment.newInstance(video)
+
+                if (currentFragment == null) {
+                    addFragment(fragment = newFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
+                } else {
+                    if (currentFragment is PlayerFragment) {
+                        currentFragment.loadNewVideo(video)
+                    }
+                }
             }
         }
     }
@@ -190,4 +202,15 @@ class MainActivity : YouTubeBaseActivity(),
         }
     }
 
+    private fun hideKeyBoard() {
+        val imm =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view!!.windowToken, 0)
+    }
+
+    private fun showKeyBoard() {
+        val imm =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    }
 }

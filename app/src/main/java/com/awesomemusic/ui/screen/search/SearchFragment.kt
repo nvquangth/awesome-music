@@ -1,8 +1,11 @@
 package com.awesomemusic.ui.screen.search
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -10,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.remote.Network
@@ -98,8 +102,19 @@ class SearchFragment: Fragment(), SearchContract.View {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    override fun showAddVideoToPlaylistSuccess(video: Video) {
+        Toast.makeText(context, "Add success", Toast.LENGTH_SHORT).show()
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    override fun showAddVideoToPlaylistFailed(video: Video) {
+        Toast.makeText(context, "Add failed", Toast.LENGTH_SHORT).show()
+    }
+
     private fun onItemVideoClick(video: Video) {
-        itemClickListener.onItemClick(video)
+//        itemClickListener.onItemClick(TAG, video)
+        presenter?.addVideoToPlaylist(video)
     }
 
     private fun hideKeyBoard() {

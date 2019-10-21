@@ -1,5 +1,6 @@
 package com.awesomemusic.ui.screen.search
 
+import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.repository.VideoRepository
 import com.awesomemusic.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -32,6 +33,23 @@ class SearchPresenter(
 
     override fun clearQuery() {
         view.showQuery("")
+    }
+
+    override fun addVideoToPlaylist(video: Video) {
+        compositeDisposable.add(
+            repository.addVideoToPlaylist(video)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    if (it.statusCode == 200) {
+                        view.showAddVideoToPlaylistSuccess(video)
+                    } else if (it.statusCode == 500) {
+                        view.showAddVideoToPlaylistFailed(video)
+                    }
+                }, {
+                    view.showError(it)
+                })
+        )
     }
 
     override fun onStart() {
