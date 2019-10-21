@@ -20,21 +20,6 @@ class Network {
         return logging
     }
 
-//    private fun createHeaderInterceptor(): Interceptor {
-//
-//        return Interceptor { chain ->
-//            val request = chain.request()
-//            val newUrl =
-//                request.url().newBuilder().build()
-//            val newRequest = request.newBuilder()
-//                .url(newUrl)
-//                .header("Content-Type", "application/json")
-//                .method(request.method(), request.body())
-//                .build()
-//            chain.proceed(newRequest)
-//        }
-//    }
-
     private fun createOkHttpClient(logging: Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)

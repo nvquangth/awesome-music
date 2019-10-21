@@ -5,20 +5,17 @@ import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.remote.Network
 import com.awesomemusic.data.repository.VideoRepository
 import com.awesomemusic.ui.base.ItemVideoClickListenter
 import com.awesomemusic.ui.screen.playlist.VideoAdapter
-import kotlinx.android.synthetic.main.fragment_loadmore_refresh.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment: Fragment(), SearchContract.View {

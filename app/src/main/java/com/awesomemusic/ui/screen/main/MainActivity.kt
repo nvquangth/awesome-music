@@ -14,7 +14,6 @@ import com.awesomemusic.ui.screen.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.youtube.player.YouTubeBaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_playlist.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class MainActivity : YouTubeBaseActivity(),
@@ -23,9 +22,13 @@ class MainActivity : YouTubeBaseActivity(),
     ItemVideoClickListenter,
     MotionLayoutListener {
 
-    private var currentFragment: Fragment? = null
-    private var playlistFragment: PlaylistFragment? = null
-    private var searchFragment: SearchFragment? = null
+    companion object {
+        const val FRAGMENT_TAG = "fragment_tag_"
+    }
+
+    private var currentPositionFragment = Tab.PLAYLIST.tab
+    private lateinit var playlistFragment: Fragment
+    private lateinit var searchFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +39,7 @@ class MainActivity : YouTubeBaseActivity(),
         playlistFragment = PlaylistFragment.newInstance()
         searchFragment = SearchFragment.newInstance()
 
-//        fragmentManager?.beginTransaction()?.add(R.id.container, playlistFragment, PlaylistFragment.TAG)?.commit()
-        fragmentManager?.beginTransaction()?.add(R.id.container, searchFragment, SearchFragment.TAG)?.commit()
+        onTabClick(1)
     }
 
     override fun onNavigationItemReselected(item: MenuItem) = when (item.itemId) {
@@ -60,23 +62,22 @@ class MainActivity : YouTubeBaseActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.nav_home -> {
-
+            onTabClick(0)
             true
         }
         R.id.nav_playlist -> {
-
+            onTabClick(1)
             true
         }
         R.id.nav_trending -> {
-
+            onTabClick(2)
             true
         }
         R.id.nav_library -> {
-
+            onTabClick(3)
             true
         }
         else -> {
-
             false
         }
     }
@@ -86,7 +87,7 @@ class MainActivity : YouTubeBaseActivity(),
         val newFragment = PlayerFragment.newInstance(video)
 
         if (currentFragment == null) {
-                addFragment(fragment = newFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
+            addFragment(fragment = newFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
         } else {
             if (currentFragment is PlayerFragment) {
                 currentFragment.loadNewVideo(video)
@@ -95,13 +96,17 @@ class MainActivity : YouTubeBaseActivity(),
     }
 
     override fun onMotionLayoutProgress(TAG: String, process: Float) {
-        when(TAG) {
+        when (TAG) {
             PlayerFragment.TAG -> {
-//                if (playlistFragment != null) {
-//                    playlistFragment?.motionLayoutPlaylist?.progress = process
-//                }
-                if (searchFragment != null) {
-                    searchFragment?.motionLayoutSearch?.progress = process
+                when (currentPositionFragment) {
+                    Tab.HOME.tab -> searchFragment.motionLayoutSearch?.progress = process
+                    Tab.PLAYLIST.tab -> playlistFragment.motionLayoutMain?.progress = process
+                    Tab.TRENDING.tab -> {
+
+                    }
+                    Tab.LIBRARY.tab -> {
+
+                    }
                 }
             }
         }
@@ -142,4 +147,47 @@ class MainActivity : YouTubeBaseActivity(),
         if (addToBackStack) transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    private fun onTabClick(tab: Int): Boolean {
+        val currentTag = getTabFragmentTag(currentPositionFragment)
+        val newTag = getTabFragmentTag(tab)
+
+        val fragmentManager = fragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        val currentFragment = findFragment(currentTag)
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment)
+        }
+
+        var newFragment = findFragment(newTag)
+        if (newFragment == null) {
+            newFragment = newFragmentInstance(tab)
+            if (newFragment.isAdded) {
+                fragmentTransaction.show(newFragment)
+            } else {
+                fragmentTransaction.add(R.id.container, newFragment, newTag)
+            }
+        } else {
+            fragmentTransaction.show(newFragment)
+        }
+        currentPositionFragment = tab
+        fragmentTransaction.commit()
+        return true
+    }
+
+    private fun getTabFragmentTag(position: Int): String {
+        return FRAGMENT_TAG + position
+    }
+
+    private fun newFragmentInstance(position: Int): Fragment {
+        return when (position) {
+            Tab.HOME.tab -> searchFragment
+            Tab.PLAYLIST.tab -> playlistFragment
+            Tab.TRENDING.tab -> searchFragment
+            Tab.LIBRARY.tab -> searchFragment
+            else -> Fragment()
+        }
+    }
+
 }

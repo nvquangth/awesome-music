@@ -18,14 +18,13 @@ class SearchPresenter(
             repository.getVideosByTitle(q)
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
-                .doAfterTerminate {
-                    view.hideLoadingIndicator()
-                }
                 .subscribe({
                     it.videos?.let {
                         view.showVideos(it)
                     }
+                    view.hideLoadingIndicator()
                 }, {
+                    view.hideLoadingIndicator()
                     view.showError(it)
                 })
         )
