@@ -34,7 +34,7 @@ class PlaylistPresenter(
                 )
                 videos.add(video)
             }
-            view.showPlaylist(videos)
+            view.showPlaylist(sortPlaylist(videos))
         }.addOnFailureListener { exception ->
             view.showError(exception)
         }
@@ -63,7 +63,7 @@ class PlaylistPresenter(
                     )
                     videos.add(video)
                 }
-                view.showPlaylist(videos)
+                view.showPlaylist(sortPlaylist(videos))
             }
         }
     }
@@ -108,5 +108,14 @@ class PlaylistPresenter(
 
     override fun onStop() {
 
+    }
+
+    private fun sortPlaylist(playlist: MutableList<Video>): List<Video> {
+        playlist.sortWith(Comparator { video1, video2 ->
+            val timeRequestVideo1 = video1.timeRequest ?: 0
+            val timeRequestVideo2 = video2.timeRequest ?: 0
+            (timeRequestVideo1 - timeRequestVideo2).toInt()
+        })
+        return playlist
     }
 }
