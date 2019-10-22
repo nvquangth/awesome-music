@@ -41,9 +41,11 @@ class MainActivity : YouTubeBaseActivity(),
 
         playlistFragment = PlaylistFragment.newInstance()
         searchFragment = SearchFragment.newInstance()
+        playerFragment = PlayerFragment.newInstance()
 
         onTabClick(0)
         onTabClick(1)
+        addPlayerFragment()
     }
 
     override fun onNavigationItemReselected(item: MenuItem) = when (item.itemId) {
@@ -90,24 +92,24 @@ class MainActivity : YouTubeBaseActivity(),
     }
 
     override fun onItemClick(fromFragment: String, video: Video) {
-        when(fromFragment) {
-            SearchFragment.TAG -> {
-
-            }
-            PlaylistFragment.TAG -> {
-                val currentFragment = findFragment(PlayerFragment.TAG)
-                playerFragment = PlayerFragment.newInstance(video)
-
-                if (currentFragment == null) {
-                    addFragment(fragment = playerFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
-                }
-//                else {
-//                    if (currentFragment is PlayerFragment) {
-//                        currentFragment.loadNewVideo(video)
-//                    }
+//        when(fromFragment) {
+//            SearchFragment.TAG -> {
+//
+//            }
+//            PlaylistFragment.TAG -> {
+//                val currentFragment = findFragment(PlayerFragment.TAG)
+//                playerFragment = PlayerFragment.newInstance()
+//
+//                if (currentFragment == null) {
+//                    addFragment(fragment = playerFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
 //                }
-            }
-        }
+////                else {
+////                    if (currentFragment is PlayerFragment) {
+////                        currentFragment.loadNewVideo(video)
+////                    }
+////                }
+//            }
+//        }
     }
 
     override fun onMotionLayoutProgress(TAG: String, process: Float) {
@@ -134,6 +136,10 @@ class MainActivity : YouTubeBaseActivity(),
             setOnNavigationItemReselectedListener(this@MainActivity)
         }
 
+    }
+
+    private fun addPlayerFragment() {
+        addFragment(fragment = playerFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
     }
 
     fun addFragment(

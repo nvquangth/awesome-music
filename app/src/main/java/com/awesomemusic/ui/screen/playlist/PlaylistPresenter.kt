@@ -93,6 +93,7 @@ class PlaylistPresenter(
                 .subscribe({
                     if (it.statusCode == 200) {
                         Log.d("Playlist: ", "Add To Playing Success")
+                        removeVideoFromPlaylist(video)
                     } else {
                         Log.d("Playlist: ", "Add To Playing Failed")
                     }

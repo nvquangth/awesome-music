@@ -28,7 +28,7 @@ class PlayerFragment : Fragment(), PlayerContract.View {
 
     companion object {
         const val TAG = "PLAYER_FRAGMENT"
-        fun newInstance(video: Video) = PlayerFragment()
+        fun newInstance() = PlayerFragment()
     }
 
     private var video: Video? = null
