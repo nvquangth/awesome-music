@@ -103,7 +103,7 @@ class SearchFragment: Fragment(), SearchContract.View {
 
     @TargetApi(Build.VERSION_CODES.M)
     override fun showAddVideoToPlaylistSuccess(video: Video) {
-        Toast.makeText(context, "Add success", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Added to Playlist", Toast.LENGTH_SHORT).show()
         adapter.removeVideo(video)
     }
 

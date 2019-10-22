@@ -5,6 +5,7 @@
     android:id="@+id/motionLayoutPlaylist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_white"
     app:layoutDescription="@xml/playlist_scene">
 
     <androidx.recyclerview.widget.RecyclerView

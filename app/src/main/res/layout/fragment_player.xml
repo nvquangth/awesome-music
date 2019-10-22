@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    app:layoutDescription="@xml/player_scene"
-    app:showPaths="true">
+    app:layoutDescription="@xml/player_scene">
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youTubePlayer"

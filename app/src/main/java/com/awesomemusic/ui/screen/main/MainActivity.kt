@@ -31,6 +31,7 @@ class MainActivity : YouTubeBaseActivity(),
     private var currentPositionFragment = Tab.PLAYLIST.tab
     private lateinit var playlistFragment: Fragment
     private lateinit var searchFragment: Fragment
+    private lateinit var playerFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class MainActivity : YouTubeBaseActivity(),
         playlistFragment = PlaylistFragment.newInstance()
         searchFragment = SearchFragment.newInstance()
 
+        onTabClick(0)
         onTabClick(1)
     }
 
@@ -73,13 +75,13 @@ class MainActivity : YouTubeBaseActivity(),
             true
         }
         R.id.nav_trending -> {
-            onTabClick(2)
-            hideKeyBoard()
+//            onTabClick(2)
+//            hideKeyBoard()
             true
         }
         R.id.nav_library -> {
-            onTabClick(3)
-            hideKeyBoard()
+//            onTabClick(3)
+//            hideKeyBoard()
             true
         }
         else -> {
@@ -94,10 +96,10 @@ class MainActivity : YouTubeBaseActivity(),
             }
             PlaylistFragment.TAG -> {
                 val currentFragment = findFragment(PlayerFragment.TAG)
-                val newFragment = PlayerFragment.newInstance(video)
+                playerFragment = PlayerFragment.newInstance(video)
 
                 if (currentFragment == null) {
-                    addFragment(fragment = newFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
+                    addFragment(fragment = playerFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
                 } else {
                     if (currentFragment is PlayerFragment) {
                         currentFragment.loadNewVideo(video)
