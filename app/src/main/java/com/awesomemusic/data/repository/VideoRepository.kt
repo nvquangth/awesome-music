@@ -27,4 +27,15 @@ class VideoRepository(
         description = video.description ?: "",
         thumbnailUrl = video.thumbnailUrl ?: ""
     )
+
+    fun addVideoToPlaying(video: Video) = api.addVideoToPlaying(
+        videoId = video.videoId,
+        title = video.title ?: "",
+        channelId = video.channelId ?: "",
+        channelTitle = video.channelTitle ?: "",
+        publishedAt = video.publishedAt ?: "",
+        description = video.description ?: "",
+        thumbnailUrl = video.thumbnailUrl ?: "",
+        timeRequest = video.timeRequest ?: 0
+    )
 }

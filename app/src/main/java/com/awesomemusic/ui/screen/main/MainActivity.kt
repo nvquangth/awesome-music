@@ -100,11 +100,12 @@ class MainActivity : YouTubeBaseActivity(),
 
                 if (currentFragment == null) {
                     addFragment(fragment = playerFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
-                } else {
-                    if (currentFragment is PlayerFragment) {
-                        currentFragment.loadNewVideo(video)
-                    }
                 }
+//                else {
+//                    if (currentFragment is PlayerFragment) {
+//                        currentFragment.loadNewVideo(video)
+//                    }
+//                }
             }
         }
     }

@@ -33,4 +33,17 @@ interface VideoApi {
         @Field("description") description: String,
         @Field("thumbnailUrl") thumbnailUrl: String
     ): Single<BaseResponse>
+
+    @FormUrlEncoded
+    @PUT("/playing")
+    fun addVideoToPlaying(
+        @Field("videoId") videoId: String,
+        @Field("title") title: String,
+        @Field("channelId") channelId: String,
+        @Field("channelTitle") channelTitle: String,
+        @Field("publishedAt") publishedAt: String,
+        @Field("description") description: String,
+        @Field("thumbnailUrl") thumbnailUrl: String,
+        @Field("timeRequest") timeRequest: Long
+    ): Single<BaseResponse>
 }

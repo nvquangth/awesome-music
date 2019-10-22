@@ -17,5 +17,7 @@ interface PlaylistContract {
         fun listeningPlaylist()
 
         fun removeVideoFromPlaylist(video: Video)
+
+        fun addVideoToPlaying(video: Video)
     }
 }

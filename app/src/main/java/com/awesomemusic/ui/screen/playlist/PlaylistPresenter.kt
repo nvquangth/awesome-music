@@ -29,7 +29,8 @@ class PlaylistPresenter(
                     description = document.getString(Constants.DESCRIPTION_FIELD),
                     publishedAt = document.getString(Constants.PUBLISHED_AT_FIELD),
                     thumbnailUrl = document.getString(Constants.THUMBNAIL_URL_FIELD),
-                    title = document.getString(Constants.TITLE_FIELD)
+                    title = document.getString(Constants.TITLE_FIELD),
+                    timeRequest = document.getLong(Constants.TIME_REQUEST_FIELD)
                 )
                 videos.add(video)
             }
@@ -57,7 +58,8 @@ class PlaylistPresenter(
                         description = document.getString(Constants.DESCRIPTION_FIELD),
                         publishedAt = document.getString(Constants.PUBLISHED_AT_FIELD),
                         thumbnailUrl = document.getString(Constants.THUMBNAIL_URL_FIELD),
-                        title = document.getString(Constants.TITLE_FIELD)
+                        title = document.getString(Constants.TITLE_FIELD),
+                        timeRequest = document.getLong(Constants.TIME_REQUEST_FIELD)
                     )
                     videos.add(video)
                 }
@@ -75,7 +77,24 @@ class PlaylistPresenter(
                     if (it.statusCode == 200) {
                         Log.d("Playlist: ", "Remove success")
                     } else {
-                        Log.d("Playlist: ", "Remove success")
+                        Log.d("Playlist: ", "Remove failed")
+                    }
+                }, {
+                    view.showError(it)
+                })
+        )
+    }
+
+    override fun addVideoToPlaying(video: Video) {
+        compositeDisposable.add(
+            videoRepository.addVideoToPlaying(video)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    if (it.statusCode == 200) {
+                        Log.d("Playlist: ", "Add To Playing Success")
+                    } else {
+                        Log.d("Playlist: ", "Add To Playing Failed")
                     }
                 }, {
                     view.showError(it)

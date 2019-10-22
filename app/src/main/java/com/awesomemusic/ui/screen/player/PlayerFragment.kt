@@ -14,6 +14,8 @@ import androidx.constraintlayout.motion.widget.MotionScene
 import androidx.core.os.bundleOf
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
+import com.awesomemusic.data.remote.FirestoreHelperImpl
+import com.awesomemusic.data.repository.CloudRepository
 import com.awesomemusic.ui.base.MotionLayoutListener
 import com.awesomemusic.ui.screen.main.MainActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
@@ -22,19 +24,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_player.*
 import kotlin.math.abs
 
-class PlayerFragment : Fragment() {
+class PlayerFragment : Fragment(), PlayerContract.View {
+
     companion object {
         const val TAG = "PLAYER_FRAGMENT"
-        private const val BUNDLE_VIDEO = "BUNDLE_VIDEO"
-
-        fun newInstance(video: Video) = PlayerFragment().apply {
-            arguments = bundleOf(BUNDLE_VIDEO to video)
-        }
+        fun newInstance(video: Video) = PlayerFragment()
     }
 
     private var video: Video? = null
     private var player: YouTubePlayer? = null
     private var motionLayoutListener: MotionLayoutListener? = null
+    private var presenter: PlayerPresenter? = null
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
@@ -63,8 +63,6 @@ class PlayerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        video = arguments.getParcelable(BUNDLE_VIDEO) ?: return
-
         youTubePlayer?.initialize(
             "AIzaSyDmVBc4vIy8hBBFnv3tB3VvhZwUewNqYjs",
             object : YouTubePlayer.OnInitializedListener {
@@ -81,9 +79,19 @@ class PlayerFragment : Fragment() {
                     p2: Boolean
                 ) {
                     player = p1
-                    player?.cueVideo(video?.videoId)
+//                    player?.cueVideo(video?.videoId)
                 }
             })
+
+        presenter = PlayerPresenter(
+            view = this,
+            cloudRepository = CloudRepository(firestoreHelper = FirestoreHelperImpl())
+        )
+
+        presenter?.apply {
+            getPlaying()
+            listeningPlaying()
+        }
 
         bindView()
 
@@ -122,7 +130,20 @@ class PlayerFragment : Fragment() {
         })
     }
 
-    fun loadNewVideo(video: Video) {
+    override fun showPlaying(video: Video) {
+        loadNewVideo(video)
+    }
+
+    override fun showLoadingIndicator() {
+    }
+
+    override fun hideLoadingIndicator() {
+    }
+
+    override fun showError(throwable: Throwable) {
+    }
+
+    private fun loadNewVideo(video: Video) {
         this.video = video
         player?.loadVideo(video.videoId)
         bindView()

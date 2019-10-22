@@ -24,4 +24,5 @@ object Constants {
     const val DESCRIPTION_FIELD = "description"
     const val PUBLISHED_AT_FIELD = "publishedAt"
     const val THUMBNAIL_URL_FIELD = "thumbnailUrl"
+    const val TIME_REQUEST_FIELD = "timeRequest"
 }

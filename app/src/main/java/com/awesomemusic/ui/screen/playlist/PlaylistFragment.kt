@@ -83,6 +83,7 @@ class PlaylistFragment : Fragment(), PlaylistContract.View {
 
     private fun onItemVideoClick(video: Video) {
         itemClickListener.onItemClick(TAG, video)
+        presenter.addVideoToPlaying(video)
     }
 
     private fun onRemoveItemVideoClick(video: Video) {

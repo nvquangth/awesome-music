@@ -18,5 +18,6 @@ data class Video(
     @SerializedName("thumbnail_url")
     val thumbnailUrl: String? = null,
     @SerializedName("published_at")
-    val publishedAt: String? = null
+    val publishedAt: String? = null,
+    val timeRequest: Long? = null
 ) : Parcelable
