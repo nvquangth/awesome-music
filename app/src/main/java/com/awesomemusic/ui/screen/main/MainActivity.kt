@@ -10,6 +10,7 @@ import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.ui.base.ItemVideoClickListenter
 import com.awesomemusic.ui.base.MotionLayoutListener
+import com.awesomemusic.ui.base.VideoTrackingListener
 import com.awesomemusic.ui.screen.player.PlayerFragment
 import com.awesomemusic.ui.screen.playlist.PlaylistFragment
 import com.awesomemusic.ui.screen.search.SearchFragment
@@ -22,7 +23,8 @@ class MainActivity : YouTubeBaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
     BottomNavigationView.OnNavigationItemReselectedListener,
     ItemVideoClickListenter,
-    MotionLayoutListener {
+    MotionLayoutListener,
+    VideoTrackingListener {
 
     companion object {
         const val FRAGMENT_TAG = "fragment_tag_"
@@ -126,6 +128,12 @@ class MainActivity : YouTubeBaseActivity(),
                     }
                 }
             }
+        }
+    }
+
+    override fun onVideoFinished() {
+        if (playlistFragment is PlaylistFragment) {
+            (playlistFragment as PlaylistFragment).presenter.autoPlayNextVideo()
         }
     }
 

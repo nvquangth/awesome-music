@@ -9,6 +9,9 @@ class PlayerPresenter(
     private val cloudRepository: CloudRepository
     ): PlayerContract.Presenter {
 
+    var playerAlready = false
+    var isPlayerRunning = false
+    lateinit var currentVideo: Video
 
     override fun getPlaying() {
         cloudRepository.getPlaying().get().addOnSuccessListener {result ->
@@ -23,7 +26,8 @@ class PlayerPresenter(
                     thumbnailUrl = document.getString(Constants.THUMBNAIL_URL_FIELD),
                     title = document.getString(Constants.TITLE_FIELD)
                 )
-                view.showPlaying(video)
+                currentVideo = video
+                view.showPlaying(currentVideo)
                 return@addOnSuccessListener
             }
         }.addOnFailureListener { exception ->
@@ -50,7 +54,8 @@ class PlayerPresenter(
                         thumbnailUrl = document.getString(Constants.THUMBNAIL_URL_FIELD),
                         title = document.getString(Constants.TITLE_FIELD)
                     )
-                    view.showPlaying(video)
+                    currentVideo = video
+                    view.showPlaying(currentVideo)
                     return@addSnapshotListener
                 }
             }

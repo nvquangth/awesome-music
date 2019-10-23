@@ -16,6 +16,7 @@ class PlaylistPresenter(
 
     private val compositeDisposable = CompositeDisposable()
     private val scheduler = SchedulerProvider()
+    var playlist: List<Video> = listOf()
 
     override fun getPlaylist() {
         cloudRepository.getPlaylist().get().addOnSuccessListener { result ->
@@ -34,7 +35,8 @@ class PlaylistPresenter(
                 )
                 videos.add(video)
             }
-            view.showPlaylist(sortPlaylist(videos))
+            playlist = sortPlaylist(videos)
+            view.showPlaylist(playlist)
         }.addOnFailureListener { exception ->
             view.showError(exception)
         }
@@ -63,7 +65,8 @@ class PlaylistPresenter(
                     )
                     videos.add(video)
                 }
-                view.showPlaylist(sortPlaylist(videos))
+                playlist = sortPlaylist(videos)
+                view.showPlaylist(playlist)
             }
         }
     }
@@ -101,6 +104,13 @@ class PlaylistPresenter(
                     view.showError(it)
                 })
         )
+    }
+
+    override fun autoPlayNextVideo() {
+        if (playlist.isNotEmpty()) {
+            addVideoToPlaying(playlist[0])
+            removeVideoFromPlaylist(playlist[0])
+        }
     }
 
     override fun onStart() {

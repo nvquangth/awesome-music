@@ -17,6 +17,7 @@ import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.remote.FirestoreHelperImpl
 import com.awesomemusic.data.repository.CloudRepository
 import com.awesomemusic.ui.base.MotionLayoutListener
+import com.awesomemusic.ui.base.VideoTrackingListener
 import com.awesomemusic.ui.screen.main.MainActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -35,17 +36,24 @@ class PlayerFragment : Fragment(), PlayerContract.View {
     private var player: YouTubePlayer? = null
     private var motionLayoutListener: MotionLayoutListener? = null
     private var presenter: PlayerPresenter? = null
+    private var videoTrackingListener: VideoTrackingListener? = null
 
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
         if (activity is MotionLayoutListener) {
             motionLayoutListener = activity
         }
+        if (activity is VideoTrackingListener) {
+            videoTrackingListener = activity
+        }
     }
 
     override fun onDetach() {
         if (motionLayoutListener != null) {
             motionLayoutListener = null
+        }
+        if (videoTrackingListener != null) {
+            videoTrackingListener = null
         }
         super.onDetach()
     }
@@ -78,8 +86,34 @@ class PlayerFragment : Fragment(), PlayerContract.View {
                     p1: YouTubePlayer?,
                     p2: Boolean
                 ) {
+                    presenter?.playerAlready = true
                     player = p1
-//                    player?.cueVideo(video?.videoId)
+
+                    if (presenter?.isPlayerRunning == false) {
+                        loadNewVideo(presenter!!.currentVideo)
+                    }
+
+                    player?.setPlayerStateChangeListener(object : YouTubePlayer.PlayerStateChangeListener {
+                        override fun onAdStarted() {
+                        }
+
+                        override fun onLoading() {
+                        }
+
+                        override fun onVideoStarted() {
+                        }
+
+                        override fun onLoaded(p0: String?) {
+                        }
+
+                        override fun onVideoEnded() {
+                            videoTrackingListener?.onVideoFinished()
+                        }
+
+                        override fun onError(p0: YouTubePlayer.ErrorReason?) {
+                        }
+
+                    })
                 }
             })
 
@@ -131,7 +165,10 @@ class PlayerFragment : Fragment(), PlayerContract.View {
     }
 
     override fun showPlaying(video: Video) {
-        loadNewVideo(video)
+        if (presenter?.playerAlready == true) {
+            presenter?.isPlayerRunning = true
+            loadNewVideo(video)
+        }
     }
 
     override fun showLoadingIndicator() {
