@@ -48,7 +48,7 @@ class MainActivity : YouTubeBaseActivity(),
 
         onTabClick(0)
         onTabClick(1)
-        addPlayerFragment()
+//        addPlayerFragment()
     }
 
     override fun onNavigationItemReselected(item: MenuItem) = when (item.itemId) {
