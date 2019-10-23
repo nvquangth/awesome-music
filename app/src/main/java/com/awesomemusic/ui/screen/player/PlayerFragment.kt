@@ -11,17 +11,14 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionScene
-import androidx.core.os.bundleOf
 import com.awesomemusic.R
 import com.awesomemusic.data.model.Video
 import com.awesomemusic.data.remote.FirestoreHelperImpl
 import com.awesomemusic.data.repository.CloudRepository
 import com.awesomemusic.ui.base.MotionLayoutListener
 import com.awesomemusic.ui.base.VideoTrackingListener
-import com.awesomemusic.ui.screen.main.MainActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_player.*
 import kotlin.math.abs
 
@@ -63,8 +60,7 @@ class PlayerFragment : Fragment(), PlayerContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater?.inflate(R.layout.fragment_player, container, false)
-        return view
+        return inflater?.inflate(R.layout.fragment_player, container, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -93,7 +89,8 @@ class PlayerFragment : Fragment(), PlayerContract.View {
                         loadNewVideo(presenter!!.currentVideo)
                     }
 
-                    player?.setPlayerStateChangeListener(object : YouTubePlayer.PlayerStateChangeListener {
+                    player?.setPlayerStateChangeListener(object :
+                        YouTubePlayer.PlayerStateChangeListener {
                         override fun onAdStarted() {
                         }
 

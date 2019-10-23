@@ -43,8 +43,7 @@ class SearchFragment: Fragment(), SearchContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater?.inflate(R.layout.fragment_search, container, false)
-        return view
+        return inflater?.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -113,7 +112,6 @@ class SearchFragment: Fragment(), SearchContract.View {
     }
 
     private fun onItemVideoClick(video: Video, position: Int) {
-//        itemClickListener.onItemClick(TAG, video)
         presenter?.addVideoToPlaylist(video)
     }
 

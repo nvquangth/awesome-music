@@ -3,7 +3,6 @@ package com.awesomemusic.ui.screen.playlist
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Fragment
-import android.app.FragmentTransaction
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import com.awesomemusic.data.remote.Network
 import com.awesomemusic.data.repository.CloudRepository
 import com.awesomemusic.data.repository.VideoRepository
 import com.awesomemusic.ui.base.ItemVideoClickListenter
-import com.awesomemusic.ui.screen.player.PlayerFragment
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class PlaylistFragment : Fragment(), PlaylistContract.View {
@@ -43,8 +41,7 @@ class PlaylistFragment : Fragment(), PlaylistContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater?.inflate(R.layout.fragment_playlist, container, false)
-        return view
+        return inflater?.inflate(R.layout.fragment_playlist, container, false)
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -89,32 +86,4 @@ class PlaylistFragment : Fragment(), PlaylistContract.View {
     private fun onRemoveItemVideoClick(video: Video) {
         presenter.removeVideoFromPlaylist(video)
     }
-
-    private fun addFragment(
-        fragment: Fragment, TAG: String?, addToBackStack: Boolean = false
-    ) {
-        activity.fragmentManager.beginTransaction().add(R.id.container, fragment, TAG).apply {
-            commitTransaction(this, addToBackStack)
-        }
-    }
-
-    private fun replaceFragment(
-        fragment: Fragment, TAG: String?, addToBackStack: Boolean = false
-    ) {
-        activity.fragmentManager.beginTransaction().replace(R.id.container, fragment, TAG).apply {
-            commitTransaction(this, addToBackStack)
-        }
-    }
-
-    private fun findFragment(TAG: String): Fragment? {
-        return activity.fragmentManager.findFragmentByTag(TAG)
-    }
-
-    private fun commitTransaction(
-        transaction: FragmentTransaction, addToBackStack: Boolean = false
-    ) {
-        if (addToBackStack) transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
 }

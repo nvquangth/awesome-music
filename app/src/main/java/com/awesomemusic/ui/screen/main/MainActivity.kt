@@ -94,24 +94,7 @@ class MainActivity : YouTubeBaseActivity(),
     }
 
     override fun onItemClick(fromFragment: String, video: Video) {
-//        when(fromFragment) {
-//            SearchFragment.TAG -> {
-//
-//            }
-//            PlaylistFragment.TAG -> {
-//                val currentFragment = findFragment(PlayerFragment.TAG)
-//                playerFragment = PlayerFragment.newInstance()
-//
-//                if (currentFragment == null) {
-//                    addFragment(fragment = playerFragment, TAG = PlayerFragment.TAG, addToBackStack = true)
-//                }
-////                else {
-////                    if (currentFragment is PlayerFragment) {
-////                        currentFragment.loadNewVideo(video)
-////                    }
-////                }
-//            }
-//        }
+
     }
 
     override fun onMotionLayoutProgress(TAG: String, process: Float) {
