@@ -17,6 +17,7 @@ import com.awesomemusic.ui.screen.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.youtube.player.YouTubeBaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_playlist.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class MainActivity : YouTubeBaseActivity(),
@@ -102,7 +103,7 @@ class MainActivity : YouTubeBaseActivity(),
             PlayerFragment.TAG -> {
                 when (currentPositionFragment) {
                     Tab.HOME.tab -> searchFragment.motionLayoutSearch?.progress = process
-                    Tab.PLAYLIST.tab -> playlistFragment.motionLayoutMain?.progress = process
+                    Tab.PLAYLIST.tab -> playlistFragment.motionLayoutPlaylist?.progress = process
                     Tab.TRENDING.tab -> {
 
                     }

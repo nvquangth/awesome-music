@@ -135,11 +135,12 @@ class PlayerFragment : Fragment(), PlayerContract.View {
             activity.onBackPressed()
         }
 
-        btnExpanded.setOnClickListener {
-            motionLayoutPlayer.transitionToEnd()
-        }
         btnCollapsed.setOnClickListener {
             motionLayoutPlayer.transitionToStart()
+        }
+
+        layoutContent.setOnClickListener {
+            // Do nothing
         }
 
         motionLayoutPlayer.addTransitionListener(object : MotionLayout.TransitionListener {

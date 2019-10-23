@@ -19,4 +19,6 @@
 
     <!--    -->
     <string name="title_remove_video">Xóa</string>
+    <string name="title_collapse_player">Thu nhỏ</string>
+    <string name="hint_search">Tìm kiếm</string>
 </resources>

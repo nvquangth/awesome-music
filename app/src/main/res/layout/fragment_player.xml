@@ -79,18 +79,12 @@
         android:layout_height="0dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnExpanded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Expanded"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCollapsed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Collapsed"
+            android:background="@color/colorPrimary"
+            android:text="@string/title_collapse_player"
+            android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
