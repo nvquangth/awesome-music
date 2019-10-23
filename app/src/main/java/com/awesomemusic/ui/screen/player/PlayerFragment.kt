@@ -85,8 +85,8 @@ class PlayerFragment : Fragment(), PlayerContract.View {
                     presenter?.playerAlready = true
                     player = p1
 
-                    if (presenter?.isPlayerRunning == false) {
-                        loadNewVideo(presenter!!.currentVideo)
+                    if (presenter?.currentVideo != null) {
+                        loadNewVideo(presenter!!.currentVideo!!)
                     }
 
                     player?.setPlayerStateChangeListener(object :
@@ -164,7 +164,6 @@ class PlayerFragment : Fragment(), PlayerContract.View {
 
     override fun showPlaying(video: Video) {
         if (presenter?.playerAlready == true) {
-            presenter?.isPlayerRunning = true
             loadNewVideo(video)
         }
     }

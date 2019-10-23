@@ -10,8 +10,7 @@ class PlayerPresenter(
     ): PlayerContract.Presenter {
 
     var playerAlready = false
-    var isPlayerRunning = false
-    lateinit var currentVideo: Video
+    var currentVideo: Video? = null
 
     override fun getPlaying() {
         cloudRepository.getPlaying().get().addOnSuccessListener {result ->
@@ -27,7 +26,7 @@ class PlayerPresenter(
                     title = document.getString(Constants.TITLE_FIELD)
                 )
                 currentVideo = video
-                view.showPlaying(currentVideo)
+                view.showPlaying(currentVideo!!)
                 return@addOnSuccessListener
             }
         }.addOnFailureListener { exception ->
@@ -55,7 +54,7 @@ class PlayerPresenter(
                         title = document.getString(Constants.TITLE_FIELD)
                     )
                     currentVideo = video
-                    view.showPlaying(currentVideo)
+                    view.showPlaying(currentVideo!!)
                     return@addSnapshotListener
                 }
             }
