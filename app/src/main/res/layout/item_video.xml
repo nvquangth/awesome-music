@@ -22,6 +22,7 @@
             android:id="@+id/img_video"
             android:layout_width="@dimen/dp_160"
             android:layout_height="0dp"
+            android:scaleType="centerCrop"
             app:glideUrl="@{item.thumbnailUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
