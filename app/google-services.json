@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27339432960:android:ce75c8acaa6c0a222aa4e5",
+        "android_client_info": {
+          "package_name": "com.awesomemusic.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27339432960-qapbs44qpcejqfk78puoci8c1721g852.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjj4G5oeBxd4eGcsltOxbWIqqnRzoCMvc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27339432960-qapbs44qpcejqfk78puoci8c1721g852.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
