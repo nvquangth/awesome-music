@@ -20,7 +20,7 @@ class SearchPresenter(
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
                 .subscribe({
-                    it.videos?.let {
+                    it?.let {
                         view.showVideos(it)
                     }
                     view.hideLoadingIndicator()
